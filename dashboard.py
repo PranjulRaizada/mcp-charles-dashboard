@@ -533,11 +533,23 @@ def main():
         # Data table section
 
         # Display data table (standard version without row selection)
-        st.write("**Data Explorer:** Response body and request body columns are truncated for display.")
+        st.write("**Data Explorer:** Full request and response body data with proper JSON formatting.")
+        
+        # Create a display version with formatted JSON but without truncation
+        display_friendly_no_truncate = display_df.copy()
+        
+        # Format JSON columns without truncation
+        for col in ['request_body', 'response_body']:
+            if col in display_friendly_no_truncate.columns:
+                # Process rows for formatting
+                for idx in range(len(display_friendly_no_truncate)):
+                    content = display_friendly_no_truncate.iloc[idx][col]
+                    if content and not pd.isna(content):
+                        display_friendly_no_truncate.at[idx, col] = prettify_json(content)
         
         # Standard dataframe without selection
         st.dataframe(
-            display_friendly_df,
+            display_friendly_no_truncate,
             use_container_width=True,
             height=400
         )
