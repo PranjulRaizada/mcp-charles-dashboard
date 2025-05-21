@@ -10,10 +10,13 @@ graph TB
     B -- Intercepts --> C[HTTP/HTTPS Traffic]
     C --> D[Save as .chlsj/.chls File]
     
-    D --> E[Log Parser]
-    E -- JSON Conversion --> F[Structured Data]
+    D --> S[Shared Folder/Directory]
     
-    F --> G[Dashboard]
+    S --> E[Log Parser]
+    E -- JSON Conversion --> F[Structured Data]
+    F --> S2[Shared Output Directory]
+    
+    S2 --> G[Dashboard]
     G --> H1[Status Code Analysis]
     G --> H2[Network Timing]
     G --> H3[Host Distribution]
@@ -29,11 +32,13 @@ graph TB
     J --> L[API Analysis]
     
     class A,B,C networkCapture;
-    class D,E,F dataProcessing;
+    class D,S dataStorage;
+    class E,F,S2 dataProcessing;
     class G,H1,H2,H3,H4,I visualization;
     class J,K,L analysis;
     
     classDef networkCapture fill:#f9d5e5,stroke:#333,stroke-width:1px;
+    classDef dataStorage fill:#f9ebd5,stroke:#333,stroke-width:1px;
     classDef dataProcessing fill:#eeeeee,stroke:#333,stroke-width:1px;
     classDef visualization fill:#d5f9e5,stroke:#333,stroke-width:1px;
     classDef analysis fill:#e5d5f9,stroke:#333,stroke-width:1px;
@@ -48,8 +53,9 @@ The MCP-Charles workflow consists of several stages:
 - **Charles Proxy**: Intercepts HTTP/HTTPS traffic from the mobile app
 - **Traffic Capture**: Records all requests and responses passing through the proxy
 
-### 2. Log Generation
+### 2. Log Generation and Storage
 - Traffic is saved as `.chls` (Charles Session) or `.chlsj` (Charles Session JSON) files
+- Files are stored in a shared directory accessible by the processing tools
 - These files contain detailed information about requests and responses including:
   - URLs
   - Headers
@@ -58,9 +64,10 @@ The MCP-Charles workflow consists of several stages:
   - Timing information
 
 ### 3. Data Processing
-- **Log Parser**: Processes the raw log files 
+- **Log Parser**: Processes the raw log files from the shared directory
 - **JSON Conversion**: Transforms the data into a structured, standardized JSON format
 - **Data Preparation**: Organizes and optimizes data for visualization and analysis
+- **Output Storage**: Processed data is saved to a shared output directory (e.g., `/output`)
 
 ### 4. Visualization
 - **Dashboard**: Presents the data in an interactive interface
