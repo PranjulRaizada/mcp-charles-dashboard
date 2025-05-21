@@ -80,6 +80,20 @@ The dashboard provides the following visualizations:
 4. **Request Duration**: Comparison of minimum, average, and maximum response times
 5. **Duration Distribution** (when available): Histogram of request durations across different time ranges
 
+## Flow Diagram
+
+The following diagram illustrates the overall flow of data in the MCP-Charles workflow:
+
+[![MCP-Charles Flow Diagram](https://mermaid.ink/img/pako:eNplksFuwjAMhl8lycmTygNwQKCyXSaNgd3GITJJKQalCUoMiKp9911aGGxcEvvzb8f-0w29swR16IjCgHNbNsD70JpgJnF0bIBXm-3SAuCCt-cV7HdHB0Zxsbr_xCMnVLs0aTUkYA3QcdSvbhImEE2J92PQK5sRlHkE22gPt8gJOsZslCcvlSMrQPTDdnAGn_7jzWfLbR2MYEjWGVXcB57j_WxYQHXy7FncoJzmgrC0ZsQP1GS6eSp_TtkZhY58f9TnuZiHZFlKkuBHVpZRB1_RsvjAEBrNL-SrJgsdT7DRcXXXl2xnk9dHQpbWDBs-BUf2UxEGYHv_nf9rVCLFGNgK4BRVQM2VnVlKBUxU1l09sOvA6_TCU0-uJcww12oG-qtHnIXk-w_XQmKe)](https://mermaid.live/edit#pako:eNplksFuwjAMhl8lycmTygNwQKCyXSaNgd3GITJJKQalCUoMiKp9911aGGxcEvvzb8f-0w29swR16IjCgHNbNsD70JpgJnF0bIBXm-3SAuCCt-cV7HdHB0Zxsbr_xCMnVLs0aTUkYA3QcdSvbhImEE2J92PQK5sRlHkE22gPt8gJOsZslCcvlSMrQPTDdnAGn_7jzWfLbR2MYEjWGVXcB57j_WxYQHXy7FncoJzmgrC0ZsQP1GS6eSp_TtkZhY58f9TnuZiHZFlKkuBHVpZRB1_RsvjAEBrNL-SrJgsdT7DRcXXXl2xnk9dHQpbWDBs-BUf2UxEGYHv_nf9rVCLFGNgK4BRVQM2VnVlKBUxU1l09sOvA6_TCU0-uJcww12oG-qtHnIXk-w_XQmKe)
+
+1. **Data Capture**: Mobile app traffic is intercepted by Charles Proxy
+2. **Log Files**: HTTP/HTTPS traffic is saved as .chls or .chlsj files
+3. **Data Processing**: Log Parser converts the raw logs into structured JSON data
+4. **Visualization**: Dashboard processes the data and generates interactive visualizations
+5. **Analysis**: The visualizations help with troubleshooting, performance optimization, and API analysis
+
+The mermaid diagram source code is available in `static/images/mcp_charles_flow.txt` if you need to modify it.
+
 ## Customization
 
 You can customize the dashboard by modifying the following files:
