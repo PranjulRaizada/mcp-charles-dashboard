@@ -219,8 +219,19 @@ def main():
         
         st.title("Charles Proxy Log Analyzer Dashboard")
         
-        # Output directory selection
-        output_dir = st.sidebar.text_input("Output Directory", value="/Users/pranjulraizada/NewAIProject/git/mcp-charles-shared/output")
+        # Output directory selection - use environment variable or default to a common location
+        default_output_dir = os.environ.get(
+            "CHARLES_OUTPUT_DIR",
+            os.path.join(os.path.expanduser("~"), "charles_output")
+        )
+        
+        # If shared folder exists in parent directory, use that as default
+        parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        shared_path = os.path.join(parent_dir, "mcp-charles-shared", "output")
+        if os.path.exists(shared_path):
+            default_output_dir = shared_path
+        
+        output_dir = st.sidebar.text_input("Output Directory", value=default_output_dir)
         
         # File selector
         try:
@@ -228,8 +239,15 @@ def main():
         except FileNotFoundError:
             st.error(f"Directory '{output_dir}' not found")
             st.info("Please enter a valid directory path or create the directory")
-            if output_dir == "/Users/pranjulraizada/NewAIProject/git/mcp-charles-shared/output":
-                st.info("You can create the default directory with: `mkdir -p ./output`")
+            if not os.path.exists(output_dir):
+                create_dir = st.button("Create Directory")
+                if create_dir:
+                    try:
+                        os.makedirs(output_dir, exist_ok=True)
+                        st.success(f"Created directory: {output_dir}")
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Failed to create directory: {str(e)}")
             return
             
         if not json_files:
