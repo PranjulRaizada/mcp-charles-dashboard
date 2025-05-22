@@ -27,6 +27,9 @@ def create_entries_dataframe(data: Dict) -> pd.DataFrame:
     if "entries" in data:
         # Detailed or raw format
         entries = data.get("entries", [])
+    elif "data" in data and isinstance(data["data"], list):
+        # Format with entries in a "data" field
+        entries = data.get("data", [])
     elif isinstance(data, dict) and "total_entries" in data:
         # Summary format - no entries to display
         st.info("This is a summary file. It contains statistics but no detailed entries.")
